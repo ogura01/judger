@@ -17,6 +17,8 @@ class ProblemsController < ApplicationController
   # GET /problems/new
   def new
     @problem = Problem.new
+    @problem.open_time  ||= Time.now
+    @problem.close_time ||= Time.now
   end
 
   # GET /problems/1/edit
