@@ -1,0 +1,96 @@
+<h1>問題一覧</h1>
+
+<h2>午前ノ部</h2>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th style="width:300px">タイトル</th>
+      <th style="width:200px">ジャンル</th>
+      <% if current_user %>
+        <th>得点</th>
+        <th>順位</th>
+      <% end %>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @problems.select(&:first_step?).each do |problem| %>
+      <tr>
+        <% if problem.open_time < Time.now %>
+          <td><%= link_to problem.title, problem %></td>
+        <% else %>
+          <td> - </td>
+        <% end %>
+        <td><%= problem.category && problem.category.title %></td>
+        <% if current_user %>
+          <td><%= score = current_user.scores.where(problem_id: problem.id).sum(:value).to_i %>/100点</td>
+          <td><%= problem.scores.where('value > ? ', score).count + 1%>位</td>
+        <% end %>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<h2>午後ノ部</h2>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th style="width:300px">タイトル</th>
+      <th style="width:200px">ジャンル</th>
+      <% if current_user %>
+        <th>得点</th>
+        <th>順位</th>
+      <% end %>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @problems.select(&:last_step?).each do |problem| %>
+      <tr>
+        <% if problem.open_time < Time.now %>
+          <td><%= link_to problem.title, problem %></td>
+        <% else %>
+          <td> - </td>
+        <% end %>
+        <td><%= problem.category && problem.category.title %></td>
+        <% if current_user %>
+          <td><%= score = current_user.scores.where(problem_id: problem.id).sum(:value).to_i %>/400点</td>
+          <td><%= problem.scores.where('value > ? ', score).count + 1%>位</td>
+        <% end %>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<% if current_user && current_user.super? %>
+
+  <br>
+  <hr>
+  <br>
+
+  <h2>すべて (管理者向け)</h2>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th style="width:300px">タイトル</th>
+        <th style="width:200px">ジャンル</th>
+        <th colspan="2"></th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% @problems.each do |problem| %>
+        <tr>
+          <td><%= link_to problem.title, problem %></td>
+          <td><%= problem.category && problem.category.title %></td>
+          <td><%= link_to 'Edit', edit_problem_path(problem) %></td>
+          <td><%= link_to 'Destroy', problem, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+
+  <%= link_to 'New Problem', new_problem_path %>
+<% end %>

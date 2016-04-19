@@ -1,0 +1,33 @@
+<h1>投稿一覧</h1>
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th style="width:64px">Index</th>
+      <th>User</th>
+      <th>Problem</th>
+      <th>Score</th>
+      <th>Time</th>
+      <% if current_user && current_user.super? %>
+        <th colspan="3"></th>
+      <% end %>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @submissions.each do |submission| %>
+      <tr>
+        <td><%= submission.id %></td>
+        <td><%= submission.user.username %></td>
+        <td><%= submission.problem.title %></td>
+        <td><%= submission.score %>/<%= submission.problem.category.id == 3 ? 400 : 100 %>点</td>
+        <td><%= submission.created_at %></td>
+        <% if current_user && current_user.super? %>
+          <td><%= link_to 'Show', submission %></td>
+          <td><%= link_to 'Edit', edit_submission_path(submission) %></td>
+          <td><%= link_to 'Destroy', submission, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <% end %>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

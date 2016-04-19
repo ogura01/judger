@@ -1,0 +1,96 @@
+<h1>スコアボード</h1>
+<% problems = Problem.all %>
+
+<hr>
+
+<h3>トータル</h3>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th style="width:64px">順位</th>
+      <th style="width:128px">名前</th>
+      <% problems.each do |problem| %>
+        <th><%= problem.title[0] %></th>
+      <% end %>
+      <th>トータルスコア</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% User.all.order(total_score: 'desc').each_with_index do |user, index| %>
+      <tr>
+        <td><%= index + 1 %>位</td>
+        <td><%= user.username %></td>
+        <% problems.each do |problem| %>
+          <td><%= user.scores.find_or_initialize_by(problem_id: problem.id).value.to_i %>点</td>
+        <% end %>
+        <td><%= user.total_score.to_i %>点</td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<h3>競技プログラミング</h3>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th style="width:64px">順位</th>
+      <th style="width:128px">名前</th>
+      <th>スコア</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% User.all.order(pc_score: 'desc').each_with_index do |user, index| %>
+      <tr>
+        <td><%= index + 1 %>位</td>
+        <td><%= user.username %></td>
+        <td><%= user.pc_score.to_i %>点</td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<h3>Capture The Flag</h3>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th style="width:64px">順位</th>
+      <th style="width:128px">名前</th>
+      <th>スコア</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% User.all.order(ctf_score: 'desc').each_with_index do |user, index| %>
+      <tr>
+        <td><%= index + 1 %>位</td>
+        <td><%= user.username %></td>
+        <td><%= user.ctf_score.to_i %>点</td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<h3>AI Battle</h3>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th style="width:64px">順位</th>
+      <th style="width:128px">名前</th>
+      <th>スコア</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% User.all.order(ai_score: 'desc').each_with_index do |user, index| %>
+      <tr>
+        <td><%= index + 1 %>位</td>
+        <td><%= user.username %></td>
+        <td><%= user.ai_score.to_i %>点</td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

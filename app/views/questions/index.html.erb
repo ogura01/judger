@@ -1,0 +1,36 @@
+<p id="notice"><%= notice %></p>
+
+<h1>質問一覧</h1>
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>User</th>
+      <th>Question</th>
+      <th>Answer</th>
+      <% if current_user && current_user.super? %>
+        <th colspan="2"></th>
+      <% end %>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @questions.each do |question| %>
+      <tr>
+        <td><%= question.user.username %></td>
+        <td><pre><%= question.question %></pre></td>
+        <td><pre><%= question.answer %></pre></td>
+        <% if current_user && current_user.super? %>
+          <td><%= link_to 'Edit', edit_question_path(question) %></td>
+          <td><%= link_to 'Destroy', question, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <% end %>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<% if current_user %>
+  <%= link_to '質問をする', new_question_path %>
+<% end %>

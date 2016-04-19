@@ -1,0 +1,54 @@
+<% if current_user && current_user.super? %>
+  <%= form_for(@problem) do |f| %>
+    <% if @problem.errors.any? %>
+      <div id="error_explanation">
+        <h2><%= pluralize(@problem.errors.count, "error") %> prohibited this problem from being saved:</h2>
+
+        <ul>
+          <% @problem.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <div class="field">
+      <%= f.label :title %><br>
+      <%= f.text_field :title, class: 'form-control' %>
+    </div>
+    <div class="field form-group">
+      <%= f.label :category_id %><br>
+      <%= f.collection_select :category_id, Category.all, :id, :title, {}, class: 'form-control' %>
+    </div>
+    <div class="field">
+      <label>opening - closing</label>
+      <div class="form-group form-inline">
+        <%= f.datetime_local_field :open_time, class: 'form-control' %>
+        <%= f.datetime_local_field :close_time, class: 'form-control' %>
+      </div>
+    </div>
+    <div class="field">
+      <%= f.label :body %><br>
+      <%= f.text_area :body, class: 'form-control', rows: 10 %>
+    </div>
+    <table style="width:100%">
+      <tr>
+        <td>
+          <div class="field" style="margin:5px">
+            <%= f.label :input %><br>
+            <%= f.text_area :input , class: 'form-control', rows: 10 %>
+          </div>
+        </td>
+        <td>
+          <div class="field" style="margin:5px">
+            <%= f.label :output %><br>
+            <%= f.text_area :output , class: 'form-control', rows: 10 %>
+          </div>
+        </td>
+      </tr>
+    </table>
+    <div class="actions">
+      <%= f.submit :submit, class: 'btn btn-primary' %>
+    </div>
+  <% end %>
+<% end %>

@@ -1,0 +1,47 @@
+<h1><%= @problem.title %></h1>
+
+<p id="problem_body_viewer">
+  <%= @problem.body %>
+</p>
+
+<% if @problem.category.title == '競技プログラミング' %>
+<div style="margin:5px 0">
+  <%= link_to controller: 'problems', action: 'download', id: @problem.id do %>
+    <button type="button" class="btn btn-primary">入力データのダウンロード</button>
+  <% end %>
+</div>
+<% end %>
+
+<br>
+
+<% if current_user && Time.now < @problem.close_time %>
+  <%= form_for(@submission) do |f| %>
+    <% if @submission.errors.any? %>
+      <div id="error_explanation">
+        <h2><%= pluralize(@submission.errors.count, "error") %> prohibited this submission from being saved:</h2>
+
+        <ul>
+          <% @submission.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <div class="field">
+      <%= f.label :output %><br>
+      <%= f.text_area :output, class: 'form-control', rows: (@problem.category.title == '競技プログラミング' ? 10 : 1) %>
+      <%= f.hidden_field :problem_id %>
+    </div>
+    <div class="actions">
+      <%= f.submit '提出', class: 'btn btn-primary' %>
+    </div>
+  <% end %>
+<% end %>
+
+<div>
+  <% if current_user && current_user.super? %>
+    <%= link_to 'Edit', edit_problem_path(@problem) %> |
+  <% end %>
+  <%= link_to 'Back', problems_path %>
+</div>

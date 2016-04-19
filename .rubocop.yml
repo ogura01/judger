@@ -1,0 +1,6 @@
+# コメントにASCII以外の文字コードを使用することを禁止(デフォルトはtrue(有効))
+Style/AsciiComments:
+  Enabled: false
+
+Style/LineLength:
+  Max: 200
