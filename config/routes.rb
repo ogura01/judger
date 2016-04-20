@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :pictures
   get 'problems/download'
   resources :questions
   resources :submissions

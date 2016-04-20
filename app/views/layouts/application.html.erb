@@ -47,6 +47,7 @@
             <li><%= link_to "submission", submissions_path %></li>
             <li><%= link_to "scoreboard", scores_path  %></li>
             <li><%= link_to "question", questions_path %></li>
+            <% if current_user && current_user.super? %><li><%= link_to "pictures", pictures_path %></li><% end %>
           </ul>
           <ul class="nav navbar-nav navbar-right">
             <% if user_signed_in? %>
