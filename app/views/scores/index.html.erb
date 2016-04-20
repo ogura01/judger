@@ -16,7 +16,7 @@
     </tr>
   </thead>
   <tbody>
-    <% User.all.order(total_score: 'desc').each_with_index do |user, index| %>
+    <% @users.order(total_score: 'desc').each_with_index do |user, index| %>
       <tr>
         <td><%= index + 1 %>位</td>
         <td><%= user.username %></td>
@@ -41,7 +41,7 @@
     </tr>
   </thead>
   <tbody>
-    <% User.all.order(pc_score: 'desc').each_with_index do |user, index| %>
+    <% @users.order(pc_score: 'desc').each_with_index do |user, index| %>
       <tr>
         <td><%= index + 1 %>位</td>
         <td><%= user.username %></td>
@@ -63,7 +63,7 @@
     </tr>
   </thead>
   <tbody>
-    <% User.all.order(ctf_score: 'desc').each_with_index do |user, index| %>
+    <% @users.order(ctf_score: 'desc').each_with_index do |user, index| %>
       <tr>
         <td><%= index + 1 %>位</td>
         <td><%= user.username %></td>
@@ -85,7 +85,7 @@
     </tr>
   </thead>
   <tbody>
-    <% User.all.order(ai_score: 'desc').each_with_index do |user, index| %>
+    <% @users.order(ai_score: 'desc').each_with_index do |user, index| %>
       <tr>
         <td><%= index + 1 %>位</td>
         <td><%= user.username %></td>
