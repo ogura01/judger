@@ -14,7 +14,7 @@ default: &default
   encoding: utf8
   pool: 5
   username: ogura
-  password: asdf1234
+  password: test
   host: localhost
 
 development:
@@ -50,5 +50,4 @@ test:
 production:
   <<: *default
   database: judger_production
-  username: judger
   password: <%= ENV['JUDGER_DATABASE_PASSWORD'] %>
