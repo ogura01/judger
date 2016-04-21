@@ -3,7 +3,7 @@
 namespace :unicorn do
   task :start do
     config = Rails.root.join('config', 'unicorn.rb')
-    command = "bundle exec unicorn_rails -c #{config} -E development -D"
+    command = "bundle exec unicorn_rails -c #{config} -E production -D"
     puts command
     puts `#{command}`
   end
